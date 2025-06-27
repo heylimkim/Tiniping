@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>추천 결과</title>
+    <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/result.css') }}">
+</head>
+<body class="{% if characters and characters[0].name == '트러핑' %}aurora-background{% endif %}">
+    <div class="container">
+        {% if error %}
+            <h1>{{ error }}</h1>
+        {% else %}
+            <h1><span class="user-name">{{ user_name }}</span>의 티니핑은</h1>
+            <p class="{% if characters and characters[0].name == '트러핑' %}rare-message{% endif %}">
+                {% if characters and characters[0].name == '트러핑' %}
+                    희귀 티니핑!!!
+                {% else %}
+                    총 {{ characters|length }}개의 캐릭터가 있습니다.
+                {% endif %}
+            </p>
+            <div class="card-container">
+                {% for character in characters %}
+                <div class="card-container-item">
+                    <div class="cover-card {% if character.name == '트러핑' %}cover-card-blue{% endif %}">
+                        <!-- 커버 카드 내용 (이미지나 배경) -->
+                    </div>
+                    <div class="card {% if character.name == '트러핑' %}aurora-card{% endif %}">
+                        <img src="{{ character.image }}" alt="{{ character.name }}" class="card-image" />
+                        <h2>{{ character.name }}</h2>
+                        <div class="card-content">
+                            <p><strong>좋아하는 것:</strong> {{ character.likes }}</p>
+                            <p><strong>싫어하는 것:</strong> {{ character.dislikes }}</p>
+                            <p><strong>소품:</strong> {{ character.accessory }}</p>
+                            <p><strong>마법:</strong> {{ character.magic }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- 모달 -->
+            {% for character in characters %}
+            <div id="modal-{{ character.name }}" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal('{{ character.name }}')">&times;</span>
+                    <h2>{{ character.name }}</h2>
+                    <img src="{{ character.image }}" alt="{{ character.name }}" class="card-image" />
+                    <p><strong>좋아하는 것:</strong> {{ character.likes }}</p>
+                    <p><strong>싫어하는 것:</strong> {{ character.dislikes }}</p>
+                    <p><strong>소품:</strong> {{ character.accessory }}</p>
+                    <p><strong>마법:</strong> {{ character.magic }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+        <a href="{{ url_for('home') }}" class="back-button">돌아가기</a>
+    <script src="{{ url_for('static', filename='js/cover.js') }}"></script>
+
+</body>
+</html>

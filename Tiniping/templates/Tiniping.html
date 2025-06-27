@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>운명의 티니핑</title>
+    <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Tiniping.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>운명의 티니핑</h1>
+        <p>Enter a word to find a character that matches!</p>
+        
+        <!-- 서버로 데이터를 전송하는 폼 -->
+        <form action="{{ url_for('recommend') }}" method="POST">
+            <input type="text" id="input-word" name="target_word" placeholder="Enter a word..." required />
+            <button type="submit">Find Character</button>
+        </form>
+    </div>
+</body>
+</html>
